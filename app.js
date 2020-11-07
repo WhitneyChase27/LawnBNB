@@ -6,14 +6,14 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
+const PORT = process.env.PORT || 5000;
+const MONGODB_URI = process.env.MONGODB_URL || 'mongodb+srv://whitneyChase:Zyc0Rvc10S4Jw9ez@cluster0.kvzi3.mongodb.net/Cluster0'
 const flash = require('connect-flash');
 const multer = require('multer');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const MONGODB_URI =
-  'mongodb+srv://maximilian:1fTl973JsCzkgzNf@cluster0-ntrwp.mongodb.net/shop';
 
 const app = express();
 const store = new MongoDBStore({
@@ -109,10 +109,17 @@ app.use((error, req, res, next) => {
   });
 });
 
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    family: 4 
+  })
   .then(result => {
-    app.listen(3000);
+    // app.listen(5000);
   })
   .catch(err => {
     console.log(err);
