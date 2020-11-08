@@ -14,6 +14,9 @@ const multer = require('multer');
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
+const PORT = process.env.PORT || 5000;
+const MONGODB_URI = process.env.MONGODB_URL || 'mongodb+srv://derekWashburn:oGsmAdX13LReeO2q@cluster0.kvzi3.mongodb.net/Cluster0';
+
 
 const app = express();
 const store = new MongoDBStore({
@@ -110,6 +113,7 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
 mongoose
   .connect(MONGODB_URI, {
     useUnifiedTopology: true,

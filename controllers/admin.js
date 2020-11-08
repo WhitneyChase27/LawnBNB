@@ -18,10 +18,15 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const title = req.body.title;
-  const image = req.file;
+  const town = req.body.town;
+  const state = req.body.state;
+  const lawnsize = req.body.lawnsize;
+  const events = req.body.events;
   const price = req.body.price;
+  const groupsize = req.body.groupsize;
+  const eventhrs = req.body.eventhrs;
   const description = req.body.description;
+  const image = req.file;
   if (!image) {
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product',
@@ -29,8 +34,13 @@ exports.postAddProduct = (req, res, next) => {
       editing: false,
       hasError: true,
       product: {
-        title: title,
+        town: town,
+        state: state,
+        lawnsize: lawnsize,
+        events: events,
         price: price,
+        groupsize: groupsize,
+        eventhrs: eventhrs,
         description: description
       },
       errorMessage: 'Attached file is not an image.',
@@ -47,8 +57,13 @@ exports.postAddProduct = (req, res, next) => {
       editing: false,
       hasError: true,
       product: {
-        title: title,
+        town: town,
+        state: state,
+        lawnsize: lawnsize,
+        events: events,
         price: price,
+        groupsize: groupsize,
+        eventhrs: eventhrs,
         description: description
       },
       errorMessage: errors.array()[0].msg,
@@ -60,8 +75,13 @@ exports.postAddProduct = (req, res, next) => {
 
   const product = new Product({
     // _id: new mongoose.Types.ObjectId('5badf72403fd8b5be0366e81'),
-    title: title,
+    town: town,
+    state: state,
+    lawnsize: lawnsize,
+    events: events,
     price: price,
+    groupsize: groupsize,
+    eventhrs: eventhrs,
     description: description,
     imageUrl: imageUrl,
     userId: req.user
