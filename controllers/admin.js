@@ -4,12 +4,12 @@ const fileHelper = require('../util/file');
 
 const { validationResult } = require('express-validator/check');
 
-const Product = require('../models/product');
+const Lawn = require('../models/lawn');
 
-exports.getAddProduct = (req, res, next) => {
-  res.render('admin/edit-product', {
-    pageTitle: 'Add Product',
-    path: '/admin/add-product',
+exports.getAddLawn = (req, res, next) => {
+  res.render('admin/edit-lawn', {
+    pageTitle: 'Add Lawn',
+    path: '/admin/add-lawn',
     editing: false,
     hasError: false,
     errorMessage: null,
@@ -17,18 +17,18 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
-exports.postAddProduct = (req, res, next) => {
+exports.postAddLawn = (req, res, next) => {
   const title = req.body.title;
   const image = req.file;
   const price = req.body.price;
   const description = req.body.description;
   if (!image) {
-    return res.status(422).render('admin/edit-product', {
-      pageTitle: 'Add Product',
-      path: '/admin/add-product',
+    return res.status(422).render('admin/edit-lawn', {
+      pageTitle: 'Add Lawn',
+      path: '/admin/add-lawn',
       editing: false,
       hasError: true,
-      product: {
+      lawn: {
         title: title,
         price: price,
         description: description
@@ -41,12 +41,12 @@ exports.postAddProduct = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     console.log(errors.array());
-    return res.status(422).render('admin/edit-product', {
-      pageTitle: 'Add Product',
-      path: '/admin/add-product',
+    return res.status(422).render('admin/edit-lawn', {
+      pageTitle: 'Add Lawn',
+      path: '/admin/add-lawn',
       editing: false,
       hasError: true,
-      product: {
+      lawn: {
         title: title,
         price: price,
         description: description
@@ -58,7 +58,7 @@ exports.postAddProduct = (req, res, next) => {
 
   const imageUrl = image.path;
 
-  const product = new Product({
+  const lawn = new Lawn({
     // _id: new mongoose.Types.ObjectId('5badf72403fd8b5be0366e81'),
     title: title,
     price: price,
@@ -66,12 +66,12 @@ exports.postAddProduct = (req, res, next) => {
     imageUrl: imageUrl,
     userId: req.user
   });
-  product
+  lawn
     .save()
     .then(result => {
       // console.log(result);
-      console.log('Created Product');
-      res.redirect('/admin/products');
+      console.log('Created Lawn');
+      res.redirect('/admin/lawns');
     })
     .catch(err => {
       // return res.status(500).render('admin/edit-product', {
@@ -95,22 +95,22 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
-exports.getEditProduct = (req, res, next) => {
+exports.getEditLawn = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
     return res.redirect('/');
   }
-  const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(product => {
-      if (!product) {
+  const lawId = req.params.lawnId;
+  Lawn.findById(lawId)
+    .then(lawn => {
+      if (!lawn) {
         return res.redirect('/');
       }
-      res.render('admin/edit-product', {
-        pageTitle: 'Edit Product',
-        path: '/admin/edit-product',
+      res.render('admin/edit-lawn', {
+        pageTitle: 'Edit Lawn',
+        path: '/admin/edit-lawn',
         editing: editMode,
-        product: product,
+        lawn: lawn,
         hasError: false,
         errorMessage: null,
         validationErrors: []
@@ -123,8 +123,8 @@ exports.getEditProduct = (req, res, next) => {
     });
 };
 
-exports.postEditProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+exports.postEditLawn = (req, res, next) => {
+  const lawId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
   const image = req.file;
@@ -133,37 +133,37 @@ exports.postEditProduct = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(422).render('admin/edit-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
+    return res.status(422).render('admin/edit-lawn', {
+      pageTitle: 'Edit Lawn',
+      path: '/admin/edit-lawn',
       editing: true,
       hasError: true,
-      product: {
+      lawn: {
         title: updatedTitle,
         price: updatedPrice,
         description: updatedDesc,
-        _id: prodId
+        _id: lawId
       },
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array()
     });
   }
 
-  Product.findById(prodId)
-    .then(product => {
-      if (product.userId.toString() !== req.user._id.toString()) {
+  Lawn.findById(lawId)
+    .then(lawn => {
+      if (lawn.userId.toString() !== req.user._id.toString()) {
         return res.redirect('/');
       }
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.description = updatedDesc;
+      lawn.title = updatedTitle;
+      lawn.price = updatedPrice;
+      lawn.description = updatedDesc;
       if (image) {
-        fileHelper.deleteFile(product.imageUrl);
-        product.imageUrl = image.path;
+        fileHelper.deleteFile(lawn.imageUrl);
+        lawn.imageUrl = image.path;
       }
-      return product.save().then(result => {
-        console.log('UPDATED PRODUCT!');
-        res.redirect('/admin/products');
+      return lawn.save().then(result => {
+        console.log('UPDATED LAWN!');
+        res.redirect('/admin/lawns');
       });
     })
     .catch(err => {
@@ -173,16 +173,16 @@ exports.postEditProduct = (req, res, next) => {
     });
 };
 
-exports.getProducts = (req, res, next) => {
-  Product.find({ userId: req.user._id })
+exports.getLawns = (req, res, next) => {
+  Lawn.find({ userId: req.user._id })
     // .select('title price -_id')
     // .populate('userId', 'name')
-    .then(products => {
-      console.log(products);
-      res.render('admin/products', {
-        prods: products,
-        pageTitle: 'Admin Products',
-        path: '/admin/products'
+    .then(lawns => {
+      console.log(lawns);
+      res.render('admin/lawns', {
+        laws: lawns,
+        pageTitle: 'Admin Lawns',
+        path: '/admin/lawns'
       });
     })
     .catch(err => {
@@ -192,21 +192,21 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-exports.deleteProduct = (req, res, next) => {
-  const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(product => {
-      if (!product) {
-        return next(new Error('Product not found.'));
+exports.deleteLawn = (req, res, next) => {
+  const lawId = req.params.lawnId;
+  Lawn.findById(lawId)
+    .then(lawn => {
+      if (!lawn) {
+        return next(new Error('Lawn not found.'));
       }
-      fileHelper.deleteFile(product.imageUrl);
-      return Product.deleteOne({ _id: prodId, userId: req.user._id });
+      fileHelper.deleteFile(lawn.imageUrl);
+      return Lawn.deleteOne({ _id: lawId, userId: req.user._id });
     })
     .then(() => {
-      console.log('DESTROYED PRODUCT');
+      console.log('DESTROYED LAWN');
       res.status(200).json({ message: 'Success!' });
     })
     .catch(err => {
-      res.status(500).json({ message: 'Deleting product failed.' });
+      res.status(500).json({ message: 'Deleting lawn failed.' });
     });
 };

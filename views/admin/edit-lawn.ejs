@@ -10,7 +10,7 @@
         <% if (errorMessage) { %>
             <div class="user-message user-message--error"><%= errorMessage %></div>
         <% } %>
-        <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="multipart/form-data">
+        <form class="product-form" action="/admin/<% if (editing) { %>edit-lawn<% } else { %>add-lawn<% } %>" method="POST" enctype="multipart/form-data">
             <div class="form-control">
                 <label for="title">Title</label>
                 <input 
@@ -18,7 +18,7 @@
                     type="text" 
                     name="title" 
                     id="title" 
-                    value="<% if (editing || hasError) { %><%= product.title %><% } %>">
+                    value="<% if (editing || hasError) { %><%= lawn.title %><% } %>">
             </div>
             <!-- <div class="form-control">
                 <label for="imageUrl">Image URL</label>
@@ -27,7 +27,7 @@
                     type="text" 
                     name="imageUrl" 
                     id="imageUrl" 
-                    value="<% if (editing || hasError) { %><%= product.imageUrl %><% } %>">
+                    value="<% if (editing || hasError) { %><%= lawn.imageUrl %><% } %>">
             </div> -->
             <div class="form-control">
                 <label for="image">Image</label>
@@ -44,7 +44,7 @@
                     name="price" 
                     id="price" 
                     step="0.01" 
-                    value="<% if (editing || hasError) { %><%= product.price %><% } %>">
+                    value="<% if (editing || hasError) { %><%= lawn.price %><% } %>">
             </div>
             <div class="form-control">
                 <label for="description">Description</label>
@@ -52,14 +52,14 @@
                     class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
                     name="description" 
                     id="description" 
-                    rows="5"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>
+                    rows="5"><% if (editing || hasError) { %><%= lawn.description %><% } %></textarea>
             </div>
             <% if (editing) { %>
-                <input type="hidden" value="<%= product._id %>" name="productId">
+                <input type="hidden" value="<%= lawn._id %>" name="lawnId">
             <% } %>
 
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn" type="submit"><% if (editing) { %>Update Product<% } else { %>Add Product<% } %></button>
+            <button class="btn" type="submit"><% if (editing) { %>Update Lawn<% } else { %>Add Lawn<% } %></button>
         </form>
     </main>
 <%- include('../includes/end.ejs') %>
