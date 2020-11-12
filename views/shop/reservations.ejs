@@ -5,16 +5,16 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
         <main>
-            <% if (orders.length <= 0) { %>
+            <% if (reservations.length <= 0) { %>
                 <h1>Nothing there!</h1>
             <% } else { %>
                 <ul class="orders">
-                    <% orders.forEach(order => { %>
+                    <% reservations.forEach(reservation => { %>
                         <li class="orders__item">
-                            <h1>Order - # <%= order._id %> - <a href="/orders/<%= order._id %>">Invoice</a></h1>
+                            <h1>Reservation - # <%= order._id %> - <a href="/reservations/<%= reservation._id %>">Invoice</a></h1>
                             <ul class="orders__products">
-                                <% order.products.forEach(p => { %>
-                                    <li class="orders__products-item"><%= p.product.title %> (<%= p.quantity %>)</li>
+                                <% reservation.lawns.forEach(l => { %>
+                                    <li class="orders__products-item"><%= l.lawn.title %> (<%= l.quantity %>)</li>
                                 <% }); %>
                             </ul>
                         </li>

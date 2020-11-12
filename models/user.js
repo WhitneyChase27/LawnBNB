@@ -16,9 +16,9 @@ const userSchema = new Schema({
   cart: {
     items: [
       {
-        productId: {
+        lawnId: {
           type: Schema.Types.ObjectId,
-          ref: 'Product',
+          ref: 'Lawn',
           required: true
         },
         quantity: { type: Number, required: true }
@@ -27,19 +27,19 @@ const userSchema = new Schema({
   }
 });
 
-userSchema.methods.addToCart = function(product) {
-  const cartProductIndex = this.cart.items.findIndex(cp => {
-    return cp.productId.toString() === product._id.toString();
+userSchema.methods.addToCart = function(lawn) {
+  const cartLawnIndex = this.cart.items.findIndex(cp => {
+    return cp.lawnId.toString() === lawn._id.toString();
   });
   let newQuantity = 1;
   const updatedCartItems = [...this.cart.items];
 
-  if (cartProductIndex >= 0) {
-    newQuantity = this.cart.items[cartProductIndex].quantity + 1;
-    updatedCartItems[cartProductIndex].quantity = newQuantity;
+  if (cartLawnIndex >= 0) {
+    newQuantity = this.cart.items[cartLawnIndex].quantity + 1;
+    updatedCartItems[cartLawnIndex].quantity = newQuantity;
   } else {
     updatedCartItems.push({
-      productId: product._id,
+      lawnId: lawn._id,
       quantity: newQuantity
     });
   }
@@ -50,9 +50,9 @@ userSchema.methods.addToCart = function(product) {
   return this.save();
 };
 
-userSchema.methods.removeFromCart = function(productId) {
+userSchema.methods.removeFromCart = function(lawnId) {
   const updatedCartItems = this.cart.items.filter(item => {
-    return item.productId.toString() !== productId.toString();
+    return item.lawnId.toString() !== lawnId.toString();
   });
   this.cart.items = updatedCartItems;
   return this.save();
