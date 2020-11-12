@@ -199,7 +199,7 @@ exports.getLawns = (req, res, next) => {
     // .populate('userId', 'name')
     .then(lawns => {
       console.log(lawns);
-      res.render('admin/lawns', {
+      res.render('admin/lawn', {
         laws: lawns,
         pageTitle: 'Admin Lawns',
         path: '/admin/lawns'
