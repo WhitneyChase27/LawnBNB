@@ -3,31 +3,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-  town: {
-    type: String,
-    required: true
-  },
-  state: {
-    type: String,
-    required: true
-  },
-  lawnsize: {
-    type: Number,
-    required: true
-  },
-  events: {
+  title: {
     type: String,
     required: true
   },
   price: {
-    type: Number,
-    required: true
-  },
-  groupsize: {
-    type: Number,
-    required: true
-  },
-  eventhrs: {
     type: Number,
     required: true
   },
