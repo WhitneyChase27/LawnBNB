@@ -247,7 +247,7 @@ exports.postReservation = (req, res, next) => {
 exports.getReservations = (req, res, next) => {
   Reservation.find({ 'user.userId': req.user._id })
     .then(reservations => {
-      res.render('shop/orders', {
+      res.render('shop/reservations', {
         path: '/reservations',
         pageTitle: 'Your Reservations',
         reservations: reservations
