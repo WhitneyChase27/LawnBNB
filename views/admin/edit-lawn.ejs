@@ -79,7 +79,16 @@
             </div>
             <div class="form-control">
                 <label for="eventhrs">Event Hrs</label>
+                <label>Event Start Time:</label>
                 <input 
+                    class="<%= validationErrors.find(e => e.param === 'eventhrs') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="eventhrs" 
+                    id="eventhrs" 
+                    
+                    value="<% if (editing || hasError) { %><%= lawn.eventhrs %><% } %>">
+                    <label>Event End Time:</label>
+                    <input 
                     class="<%= validationErrors.find(e => e.param === 'eventhrs') ? 'invalid' : '' %>"
                     type="number" 
                     name="eventhrs" 
