@@ -20,11 +20,22 @@ router.get('/lawns', isAuth, adminController.getLawns);
 router.post(
   '/add-lawn',
   [
-    body('title')
+    body('town')
+      .isString()
+      .isLength({ min: 2 })
+      .trim(),
+      body('state')
+      .isString()
+      .isLength({ min: 2 })
+      .trim(),
+      body('lawnsize').isFloat(),
+      body('events')
       .isString()
       .isLength({ min: 3 })
       .trim(),
     body('price').isFloat(),
+    body('groupsize').isFloat(),
+    body('eventhrs').isFloat(),
     body('description')
       .isLength({ min: 5, max: 400 })
       .trim()

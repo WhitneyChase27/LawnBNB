@@ -25,7 +25,7 @@ exports.getLawns = (req, res, next) => {
       res.render('shop/lawn-list', {
         laws: lawns,
         pageTitle: 'Lawns',
-        path: '/lawns',
+        path: '/lawn',
         currentPage: page,
         hasNextPage: ITEMS_PER_PAGE * page < totalItems,
         hasPreviousPage: page > 1,
