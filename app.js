@@ -13,7 +13,7 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URL || 'mongodb+srv://derekWashburn:oGsmAdX13LReeO2q@cluster0.kvzi3.mongodb.net/Cluster0';
+const MONGODB_URI = process.env.MONGODB_URL || 'mongodb+srv://whitneyChase:Zyc0Rvc10S4Jw9ez@cluster0.kvzi3.mongodb.net/Cluster0';
 
 
 const app = express();
