@@ -6,30 +6,30 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main>
-                <% if (prods.length > 0) { %>
+                <% if (laws.length > 0) { %>
                     <div class="grid">
-                        <% for (let product of prods) { %>
+                        <% for (let lawn of laws) { %>
                             <article class="card product-item">
                                 <header class="card__header">
                                     <h1 class="product__title">
-                                        <%= product.title %>
+                                        <%= lawn.title %>
                                     </h1>
                                 </header>
                                 <div class="card__image">
-                                    <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
+                                    <img src="/<%= lawn.imageUrl %>" alt="<%= lawn.title %>">
                                 </div>
                                 <div class="card__content">
                                     <h2 class="product__price">$
-                                        <%= product.price %>
+                                        <%= lawn.price %>
                                     </h2>
                                     <p class="product__description">
-                                        <%= product.description %>
+                                        <%= lawn.description %>
                                     </p>
                                 </div>
                                 <div class="card__actions">
-                                    <a href="/products/<%= product._id %>" class="btn">Details</a>
+                                    <a href="/lawns/<%= lawn._id %>" class="btn">Details</a>
                                     <% if (isAuthenticated) { %>
-                                        <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                                        <%- include('../includes/add-to-cart.ejs', {lawn: plawn}) %>
                                     <% } %>
                                 </div>
                             </article>
@@ -37,7 +37,7 @@
                     </div>
                     <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, previousPage: previousPage, lastPage: lastPage, hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage}) %>
                     <% } else { %>
-                        <h1>No Products Found!</h1>
+                        <h1>No Lawns Found!</h1>
                         <% } %>
             </main>
             <%- include('../includes/end.ejs') %>

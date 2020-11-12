@@ -9,14 +9,16 @@ const isAuth = require('../middleware/is-auth');
 const router = express.Router();
 
 // /admin/add-product => GET
-router.get('/add-product', isAuth, adminController.getAddProduct);
+// /admin/add-lawn => GET
+router.get('/add-lawn', isAuth, adminController.getAddLawn);
 
 // /admin/products => GET
-router.get('/products', isAuth, adminController.getProducts);
+// /admin/lawns => GET
+router.get('/lawns', isAuth, adminController.getLawns);
 
-// /admin/add-product => POST
+// /admin/add-lawn => POST
 router.post(
-  '/add-product',
+  '/add-lawn',
   [
     body('town')
       .isString()
@@ -39,13 +41,13 @@ router.post(
       .trim()
   ],
   isAuth,
-  adminController.postAddProduct
+  adminController.postAddLawn
 );
 
-router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
+router.get('/edit-lawn/:lawnId', isAuth, adminController.getEditLawn);
 
 router.post(
-  '/edit-product',
+  '/edit-lawn',
   [
     body('title')
       .isString()
@@ -57,9 +59,9 @@ router.post(
       .trim()
   ],
   isAuth,
-  adminController.postEditProduct
+  adminController.postEditLawn
 );
 
-router.delete('/product/:productId', isAuth, adminController.deleteProduct);
+router.delete('/lawn/:lawnId', isAuth, adminController.deleteLawn);
 
 module.exports = router;
