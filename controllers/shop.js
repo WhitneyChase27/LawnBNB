@@ -45,8 +45,8 @@ exports.getLawn = (req, res, next) => {
   const lawId = req.params.lawnId;
   Lawn.findById(lawId)
     .then(lawn => {
-      res.render('shop/law-detail', {
-        law: law,
+      res.render('shop/lawn-detail', {
+        lawn: lawn,
         pageTitle: lawn.title,
         path: '/lawns'
       });
