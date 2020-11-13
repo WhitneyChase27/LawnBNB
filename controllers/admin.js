@@ -91,7 +91,7 @@ exports.postAddLawn = (req, res, next) => {
     .then(result => {
       // console.log(result);
       console.log('Created Lawn');
-      res.redirect('/admin/lawns');
+      res.redirect('/admin/lawn');
     })
     .catch(err => {
       // return res.status(500).render('admin/edit-product', {
@@ -183,7 +183,7 @@ exports.postEditLawn = (req, res, next) => {
       }
       return lawn.save().then(result => {
         console.log('UPDATED LAWN!');
-        res.redirect('/admin/lawns');
+        res.redirect('/admin/lawn');
       });
     })
     .catch(err => {
@@ -202,7 +202,7 @@ exports.getLawns = (req, res, next) => {
       res.render('admin/lawn', {
         laws: lawns,
         pageTitle: 'Admin Lawns',
-        path: '/admin/lawns'
+        path: '/admin/lawn'
       });
     })
     .catch(err => {

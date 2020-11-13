@@ -31,10 +31,6 @@
                                     <input type="hidden" value="<%= lawn._id %>" name="lawnId">
                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     <button class="btn" type="button" onclick="deleteLawn(this)">Delete</button>
-                                    <a href="/lawns/<%= lawn._id %>" class="btn">Details</a>
-                                    <!-- <% if (isAuthenticated) { %>
-                                        <%- include('./lawn-management.ejs', {lawn: lawn}) %>
-                                    <% } %> -->
                                 </div>
                             </article>
                             <% } %>
