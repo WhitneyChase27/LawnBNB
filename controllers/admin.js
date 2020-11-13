@@ -149,7 +149,7 @@ exports.postEditLawn = (req, res, next) => {
   const updatedPrice = req.body.price;
   const image = req.file;
   const updatedDesc = req.body.description;
-
+  console.log(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
