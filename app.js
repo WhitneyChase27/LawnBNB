@@ -13,7 +13,7 @@ const errorController = require('./controllers/error');
 const User = require('./models/user');
 
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URL || 'mongodb+srv://derekWashburn:oGsmAdX13LReeO2q@cluster0.kvzi3.mongodb.net/Cluster0';
+const MONGODB_URI = process.env.MONGODB_URL || 'mongodb+srv://whitneyChase:Gb7UeKqaHX0uuRDO@cluster0.kvzi3.mongodb.net/Cluster0';
 
 
 const app = express();
@@ -28,7 +28,7 @@ const fileStorage = multer.diskStorage({
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + '-' + file.originalname);
+    cb(null, new Date().toISOString().replace(/:/g,'-') + '-' + file.originalname);
   }
 });
 
@@ -103,6 +103,7 @@ app.use(errorController.get404);
 app.use((error, req, res, next) => {
   // res.status(error.httpStatusCode).render(...);
   // res.redirect('/500');
+  console.log(error);
   res.status(500).render('500', {
     pageTitle: 'Error!',
     path: '/500',

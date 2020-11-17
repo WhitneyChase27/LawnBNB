@@ -4,28 +4,28 @@ const stripe = require('stripe')('sk_test_Flc1Upp19T0q8ZgmKGDVJUI400j9emUSTr');
 
 const PDFDocument = require('pdfkit');
 
-const Product = require('../models/product');
-const Order = require('../models/order');
+const Lawn = require('../models/lawn');
+const Reservation = require('../models/reservation');
 
 const ITEMS_PER_PAGE = 2;
 
-exports.getProducts = (req, res, next) => {
+exports.getLawns = (req, res, next) => {
   const page = +req.query.page || 1;
   let totalItems;
 
-  Product.find()
+  Lawn.find()
     .countDocuments()
-    .then(numProducts => {
-      totalItems = numProducts;
-      return Product.find()
+    .then(numLawns => {
+      totalItems = numLawns;
+      return Lawn.find()
         .skip((page - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE);
     })
-    .then(products => {
-      res.render('shop/product-list', {
-        prods: products,
-        pageTitle: 'Products',
-        path: '/products',
+    .then(lawns => {
+      res.render('shop/lawn-list', {
+        laws: lawns,
+        pageTitle: 'Lawns',
+        path: '/lawn',
         currentPage: page,
         hasNextPage: ITEMS_PER_PAGE * page < totalItems,
         hasPreviousPage: page > 1,
@@ -41,14 +41,14 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-exports.getProduct = (req, res, next) => {
-  const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(product => {
-      res.render('shop/product-detail', {
-        product: product,
-        pageTitle: product.title,
-        path: '/products'
+exports.getLawn = (req, res, next) => {
+  const lawId = req.params.lawnId;
+  Lawn.findById(lawId)
+    .then(lawn => {
+      res.render('shop/lawn-detail', {
+        lawn: lawn,
+        pageTitle: lawn.title,
+        path: '/lawns'
       });
     })
     .catch(err => {
@@ -62,17 +62,17 @@ exports.getIndex = (req, res, next) => {
   const page = +req.query.page || 1;
   let totalItems;
 
-  Product.find()
+  Lawn.find()
     .countDocuments()
-    .then(numProducts => {
-      totalItems = numProducts;
-      return Product.find()
+    .then(numLawns => {
+      totalItems = numLawns;
+      return Lawn.find()
         .skip((page - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE);
     })
-    .then(products => {
+    .then(lawns => {
       res.render('shop/index', {
-        prods: products,
+        laws: lawns,
         pageTitle: 'Shop',
         path: '/',
         currentPage: page,
@@ -92,14 +92,14 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   req.user
-    .populate('cart.items.productId')
+    .populate('cart.items.lawnId')
     .execPopulate()
     .then(user => {
-      const products = user.cart.items;
+      const lawns = user.cart.items;
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
-        products: products
+        lawns: lawns
       });
     })
     .catch(err => {
@@ -110,10 +110,10 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
-  const prodId = req.body.productId;
-  Product.findById(prodId)
-    .then(product => {
-      return req.user.addToCart(product);
+  const lawId = req.body.lawnId;
+  Lawn.findById(lawId)
+    .then(lawn => {
+      return req.user.addToCart(lawn);
     })
     .then(result => {
       console.log(result);
@@ -126,10 +126,10 @@ exports.postCart = (req, res, next) => {
     });
 };
 
-exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+exports.postCartDeleteLawn = (req, res, next) => {
+  const lawId = req.body.lawnId;
   req.user
-    .removeFromCart(prodId)
+    .removeFromCart(lawcId)
     .then(result => {
       res.redirect('/cart');
     })
@@ -141,27 +141,27 @@ exports.postCartDeleteProduct = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res, next) => {
-  let products;
+  let lawns;
   let total = 0;
   req.user
-    .populate('cart.items.productId')
+    .populate('cart.items.lawnId')
     .execPopulate()
     .then(user => {
-      products = user.cart.items;
+      lawns = user.cart.items;
       total = 0;
-      products.forEach(p => {
-        total += p.quantity * p.productId.price;
+      lawns.forEach(l => {
+        total += l.quantity * l.lawnId.price;
       });
 
       return stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        line_items: products.map(p => {
+        line_items: lawns.map(l => {
           return {
-            name: p.productId.title,
-            description: p.productId.description,
-            amount: p.productId.price * 100,
+            name: l.lawnId.title,
+            description: l.lawnId.description,
+            amount: l.lawnId.price * 100,
             currency: 'usd',
-            quantity: p.quantity
+            quantity: l.quantity
           };
         }),
         success_url: req.protocol + '://' + req.get('host') + '/checkout/success', // => http://localhost:3000
@@ -172,7 +172,7 @@ exports.getCheckout = (req, res, next) => {
       res.render('shop/checkout', {
         path: '/checkout',
         pageTitle: 'Checkout',
-        products: products,
+        lawns: lawns,
         totalSum: total,
         sessionId: session.id
       });
@@ -186,26 +186,26 @@ exports.getCheckout = (req, res, next) => {
 
 exports.getCheckoutSuccess = (req, res, next) => {
   req.user
-    .populate('cart.items.productId')
+    .populate('cart.items.lawnId')
     .execPopulate()
     .then(user => {
-      const products = user.cart.items.map(i => {
-        return { quantity: i.quantity, product: { ...i.productId._doc } };
+      const lawns = user.cart.items.map(i => {
+        return { quantity: i.quantity, lawn: { ...i.lawnId._doc } };
       });
-      const order = new Order({
+      const reservation = new Reservation({
         user: {
           email: req.user.email,
           userId: req.user
         },
-        products: products
+        lawns: lawns
       });
-      return order.save();
+      return reservation.save();
     })
     .then(result => {
       return req.user.clearCart();
     })
     .then(() => {
-      res.redirect('/orders');
+      res.redirect('/reservations');
     })
     .catch(err => {
       const error = new Error(err);
@@ -214,28 +214,28 @@ exports.getCheckoutSuccess = (req, res, next) => {
     });
 };
 
-exports.postOrder = (req, res, next) => {
+exports.postReservation = (req, res, next) => {
   req.user
-    .populate('cart.items.productId')
+    .populate('cart.items.lawnId')
     .execPopulate()
     .then(user => {
-      const products = user.cart.items.map(i => {
-        return { quantity: i.quantity, product: { ...i.productId._doc } };
+      const lawns = user.cart.items.map(i => {
+        return { quantity: i.quantity, lawn: { ...i.lawnId._doc } };
       });
-      const order = new Order({
+      const reservation = new Reservation({
         user: {
           email: req.user.email,
           userId: req.user
         },
-        products: products
+        lawns: lawns
       });
-      return order.save();
+      return reservation.save();
     })
     .then(result => {
       return req.user.clearCart();
     })
     .then(() => {
-      res.redirect('/orders');
+      res.redirect('/reservations');
     })
     .catch(err => {
       const error = new Error(err);
@@ -244,13 +244,13 @@ exports.postOrder = (req, res, next) => {
     });
 };
 
-exports.getOrders = (req, res, next) => {
-  Order.find({ 'user.userId': req.user._id })
-    .then(orders => {
-      res.render('shop/orders', {
-        path: '/orders',
-        pageTitle: 'Your Orders',
-        orders: orders
+exports.getReservations = (req, res, next) => {
+  Reservation.find({ 'user.userId': req.user._id })
+    .then(reservations => {
+      res.render('shop/reservations', {
+        path: '/reservations',
+        pageTitle: 'Your Reservations',
+        reservations: reservations
       });
     })
     .catch(err => {
@@ -261,16 +261,16 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.getInvoice = (req, res, next) => {
-  const orderId = req.params.orderId;
-  Order.findById(orderId)
-    .then(order => {
-      if (!order) {
-        return next(new Error('No order found.'));
+  const reservationId = req.params.reservationId;
+  Reservation.findById(reservationId)
+    .then(reservation=> {
+      if (!reservation) {
+        return next(new Error('No reservation found.'));
       }
-      if (order.user.userId.toString() !== req.user._id.toString()) {
+      if (reservation.user.userId.toString() !== req.user._id.toString()) {
         return next(new Error('Unauthorized'));
       }
-      const invoiceName = 'invoice-' + orderId + '.pdf';
+      const invoiceName = 'invoice-' + reservationId + '.pdf';
       const invoicePath = path.join('data', 'invoices', invoiceName);
 
       const pdfDoc = new PDFDocument();
@@ -287,17 +287,17 @@ exports.getInvoice = (req, res, next) => {
       });
       pdfDoc.text('-----------------------');
       let totalPrice = 0;
-      order.products.forEach(prod => {
-        totalPrice += prod.quantity * prod.product.price;
+      reservation.lawns.forEach(law => {
+        totalPrice += law.quantity * law.lawn.price;
         pdfDoc
           .fontSize(14)
           .text(
-            prod.product.title +
+            law.lawn.title +
               ' - ' +
-              prod.quantity +
+              law.quantity +
               ' x ' +
               '$' +
-              prod.product.price
+              law.lawn.price
           );
       });
       pdfDoc.text('---');

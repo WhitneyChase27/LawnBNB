@@ -1,0 +1,122 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="product-form" action="/admin/<% if (editing) { %>edit-lawn<% } else { %>add-lawn<% } %>" method="POST" enctype="multipart/form-data">
+            <div class="form-control">
+                <label for="town">Town</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'town') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="town" 
+                    id="town" 
+                    value="<% if (editing || hasError) { %><%= lawn.town %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="state">State</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'state') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="state" 
+                    id="state" 
+                    value="<% if (editing || hasError) { %><%= lawn.state %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="lawnsize">Lawn Size (in feet)</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'lawnsize') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="lawnsize" 
+                    id="lawnsize" 
+                     
+                    value="<% if (editing || hasError) { %><%= lawn.lawnsize %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="events">Events Allowed</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'events') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="events" 
+                    id="events" 
+                    value="<% if (editing || hasError) { %><%= lawn.events %><% } %>">
+            </div>
+            <!-- <div class="form-control">
+                <label for="imageUrl">Image URL</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="imageUrl" 
+                    id="imageUrl" 
+                    value="<% if (editing || hasError) { %><%= lawn.imageUrl %><% } %>">
+            </div> -->
+            <div class="form-control">
+                <label for="price">Price</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'price') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="price" 
+                    id="price" 
+                    step="0.01" 
+                    value="<% if (editing || hasError) { %><%= lawn.price %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="groupsize">Group Size</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'groupsize') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="groupsize" 
+                    id="groupsize" 
+                    
+                    value="<% if (editing || hasError) { %><%= lawn.groupsize %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="eventhrs">Event Hrs</label>
+                <!-- <label>Event Start Time:</label> -->
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'eventhrs') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="eventhrs" 
+                    id="eventhrs" 
+                    
+                    value="<% if (editing || hasError) { %><%= lawn.eventhrs %><% } %>">
+                    <!-- <label>Event End Time:</label>
+                    <input 
+                    class="<%= validationErrors.find(e => e.param === 'eventhrs') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="eventhrs" 
+                    id="eventhrs" 
+                    
+                    value="<% if (editing || hasError) { %><%= lawn.eventhrs %><% } %>"> -->
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea 
+                    class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
+                    name="description" 
+                    id="description" 
+                    rows="5"><% if (editing || hasError) { %><%= lawn.description %><% } %></textarea>
+            </div>
+            <div class="form-control">
+                <label for="image">Image</label>
+                <input 
+                    type="file" 
+                    name="image" 
+                    id="image" >
+            </div>
+            <% if (editing) { %>
+                <input type="hidden" value="<%= lawn._id %>" name="lawnId">
+            <% } %>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update Lawn<% } else { %>Add Lawn<% } %></button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

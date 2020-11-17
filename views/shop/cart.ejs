@@ -5,14 +5,14 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
         <main>
-            <% if (products.length > 0) { %>
+            <% if (lawns.length > 0) { %>
                 <ul class="cart__item-list">
-                    <% products.forEach(p => { %>
+                    <% lawns.forEach(l => { %>
                         <li class="cart__item">
-                            <h1><%= p.productId.title %></h1>
-                            <h2>Quantity: <%= p.quantity %></h2>
+                            <h1><%= l.lawnId.title %></h1>
+                            <h2>Quantity: <%= l.quantity %></h2>
                             <form action="/cart-delete-item" method="POST">
-                                <input type="hidden" value="<%= p.productId._id %>" name="productId">
+                                <input type="hidden" value="<%= l.lawnId._id %>" name="lawnId">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <button class="btn danger" type="submit">Delete</button>
                             </form>
@@ -29,7 +29,7 @@
                 </div>
                 
             <% } else { %>
-                <h1>No Products in Cart!</h1>
+                <h1>No Lawns in Cart!</h1>
             <% } %>
         </main>
         <%- include('../includes/end.ejs') %>

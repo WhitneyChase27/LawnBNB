@@ -1,0 +1,18 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main class="centered">
+            <h1><%= lawn.title %></h1>
+            <hr>
+            <div class="image">
+                <img src="/<%= lawn.imageUrl %>" alt="<%= lawn.title %>">
+            </div>
+            <h2><%= lawn.price %></h2>
+            <p><%= lawn.description %></p>
+            <% if (isAuthenticated) { %>
+                <%- include('../includes/add-to-cart.ejs', {lawn: lawn}) %>
+            <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>
