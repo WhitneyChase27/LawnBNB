@@ -231,12 +231,12 @@ exports.getUserProfile = (req, res, next) => {
     });
 };
 
-exports.deleteProduct = (req, res, next) => {
-  const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(product => {
-      if (!product) {
-        return next(new Error('Product not found.'));
+// exports.deleteProduct = (req, res, next) => {
+//   const prodId = req.params.productId;
+//   Product.findById(prodId)
+//     .then(product => {
+//       if (!product) {
+//         return next(new Error('Product not found.'));
 exports.deleteLawn = (req, res, next) => {
   const lawId = req.params.lawnId;
   Lawn.findById(lawId)
