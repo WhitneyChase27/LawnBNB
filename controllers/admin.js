@@ -212,6 +212,25 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
+exports.getUserProfile = (req, res, next) => {
+  Product.find({ userId: req.user._id })
+    // .select('title price -_id')
+    // .populate('userId', 'name')
+    .then(products => {
+      console.log(products);
+      res.render('admin/userProfile', {
+        prods: products,
+        pageTitle: 'User Profile',
+        path: '/admin/userProfile'
+      });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
 exports.deleteProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)

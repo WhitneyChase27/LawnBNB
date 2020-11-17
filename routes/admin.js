@@ -14,6 +14,9 @@ router.get('/add-product', isAuth, adminController.getAddProduct);
 // /admin/products => GET
 router.get('/products', isAuth, adminController.getProducts);
 
+// /admin/userProfile => GET
+router.get('/userProfile', isAuth, adminController.getUserProfile);
+
 // /admin/add-product => POST
 router.post(
   '/add-product',
