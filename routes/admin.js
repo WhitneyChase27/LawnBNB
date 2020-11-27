@@ -45,6 +45,8 @@ router.post(
 );
 
 router.get('/edit-lawn/:lawnId', isAuth, adminController.getEditLawn);
+router.get('/lawn-management/:lawnId', isAuth, adminController.getLawnManagement);
+
 
 router.post(
   '/edit-lawn',

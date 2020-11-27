@@ -143,6 +143,34 @@ exports.getEditLawn = (req, res, next) => {
     });
 };
 
+exports.getLawnManagement = (req, res, next) => {
+  const editMode = req.query.edit;
+  if (!editMode) {
+    return res.redirect('/');
+  }
+  const lawId = req.params.lawnId;
+  Lawn.findById(lawId)
+    .then(lawn => {
+      if (!lawn) {
+        return res.redirect('/');
+      }
+      res.render('admin/lawn-management', {
+        pageTitle: 'Lawn Management',
+        path: '/admin/lawn-management',
+        editing: editMode,
+        lawn: lawn,
+        hasError: false,
+        errorMessage: null,
+        validationErrors: []
+      });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
 exports.postEditLawn = (req, res, next) => {
   const lawId = req.body.productId;
   const updatedTitle = req.body.title;
