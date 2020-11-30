@@ -1,10 +1,10 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/lawn.css">
     </head>
 
     <body>
         <%- include('../includes/navigation.ejs') %>
-
+        
             <main>
                 <div class="form-control">
                     <label for="image">Image</label>
@@ -13,38 +13,22 @@
                         name="image" 
                         id="image" >
                 </div>
-                <% if (prods.length > 0) { %>
-                    <div class="grid">
-                        <% for (let product of prods) { %>
-                            <article class="card product-item">
-                                <header class="card__header">
-                                    <h1 class="product__title">
-                                        <%= product.title %>
-                                    </h1>
-                                </header>
-                                <div class="card__image">
-                                    <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
-                                </div>
-                                <div class="card__content">
-                                    <h2 class="product__price">$
-                                        <%= product.price %>
-                                    </h2>
-                                    <p class="product__description">
-                                        <%= product.description %>
-                                    </p>
-                                </div>
-                                <div class="card__actions">
-                                    <a href="/admin/edit-product/<%= product._id %>?edit=true" class="btn">Edit</a>
-                                    <input type="hidden" value="<%= product._id %>" name="productId">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
-                                </div>
-                            </article>
-                            <% } %>
-                    </div>
-                    <% } else { %>
-                        <h1>No Products Found!</h1>
-                        <% } %>
+                <% if (reservations.length <= 0) { %>
+                    <h1>Nothing there!</h1>
+                <% } else { %>
+                    <ul class="orders">
+                        <% reservations.forEach(reservation => { %>
+                            <li class="orders__item">
+                                <h1>Reservation - # <%= order._id %> - <a href="/reservations/<%= reservation._id %>">Invoice</a></h1>
+                                <ul class="orders__products">
+                                    <% reservation.lawns.forEach(l => { %>
+                                        <li class="orders__products-item"><%= l.lawn.title %> (<%= l.quantity %>)</li>
+                                    <% }); %>
+                                </ul>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
             </main>
             <%- include('../includes/end.ejs') %>
             <script src="/js/admin.js"></script>

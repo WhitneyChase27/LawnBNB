@@ -5,6 +5,7 @@ const fileHelper = require('../util/file');
 const { validationResult } = require('express-validator/check');
 
 const Lawn = require('../models/lawn');
+const Reservation = require('../models/reservation');
 
 exports.getAddLawn = (req, res, next) => {
   res.render('admin/edit-lawn', {
@@ -213,16 +214,20 @@ exports.getLawns = (req, res, next) => {
 };
 
 exports.getUserProfile = (req, res, next) => {
-  Product.find({ userId: req.user._id })
+  Lawn.find({ userId: req.user._id })
     // .select('title price -_id')
     // .populate('userId', 'name')
-    .then(products => {
-      console.log(products);
+    .then(lawns => {
+      console.log(lawns);
+      Reservation.find({ 'user.userId': req.user._id })
+    .then(reservations => {
       res.render('admin/userProfile', {
-        prods: products,
+        prods: lawns,
         pageTitle: 'User Profile',
-        path: '/admin/userProfile'
+        path: '/userProfile',
+        reservations: reservations
       });
+    });
     })
     .catch(err => {
       const error = new Error(err);
