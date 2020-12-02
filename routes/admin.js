@@ -16,9 +16,10 @@ router.get('/add-lawn', isAuth, adminController.getAddLawn);
 // /admin/lawns => GET
 router.get('/lawns', isAuth, adminController.getLawns);
 
+// /admin/userProfile => GET
+router.get('/userProfile', isAuth, adminController.getUserProfile);
 
-
-// /admin/add-lawn => POST
+// /admin/add-product => POST
 router.post(
   '/add-lawn',
   [

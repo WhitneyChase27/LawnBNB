@@ -21,7 +21,7 @@
                 <button id="order-btn" class="btn">RESERVATION</button>
                 <script src="https://js.stripe.com/v3/"></script>
                 <script>
-                    var stripe = Stripe('pk_test_Oa1aEfV1EFTGOLJHIkx6mFUs00AtOsluFy');
+                    var stripe = Stripe('pk_test_51HtljjDVfnTF4SG7C0rfC3QJqxvXtnYni1gGERgPlaR5k4LE0BuYSodQoQDgJjORpqvy821XS3exnr6ucs3CMg7X00oxDQjJQP');
                     var orderBtn = document.getElementById('order-btn');
                     orderBtn.addEventListener('click', function() {
                         stripe.redirectToCheckout({

@@ -6,6 +6,7 @@ const fileHelper = require('../util/file');
 const { validationResult } = require('express-validator/check');
 
 const Lawn = require('../models/lawn');
+const Reservation = require('../models/reservation');
 
 exports.getAddLawn = (req, res, next) => {
   res.render('admin/edit-lawn', {
@@ -596,6 +597,35 @@ exports.getLawns = (req, res, next) => {
     });
 };
 
+exports.getUserProfile = (req, res, next) => {
+  Lawn.find({ userId: req.user._id })
+    // .select('title price -_id')
+    // .populate('userId', 'name')
+    .then(lawns => {
+      console.log(lawns);
+      Reservation.find({ 'user.userId': req.user._id })
+    .then(reservations => {
+      res.render('admin/userProfile', {
+        prods: lawns,
+        pageTitle: 'User Profile',
+        path: '/userProfile',
+        reservations: reservations
+      });
+    });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+// exports.deleteProduct = (req, res, next) => {
+//   const prodId = req.params.productId;
+//   Product.findById(prodId)
+//     .then(product => {
+//       if (!product) {
+//         return next(new Error('Product not found.'));
 exports.deleteLawn = (req, res, next) => {
   const lawId = req.params.lawnId;
   Lawn.findById(lawId)

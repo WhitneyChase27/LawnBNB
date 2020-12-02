@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const stripe = require('stripe')('sk_test_Flc1Upp19T0q8ZgmKGDVJUI400j9emUSTr');
+const stripe = require('stripe')('sk_test_51HtljjDVfnTF4SG7ETHatDr4b08f9lhbDVIxoPBZPUx7Jz6IDh5eaQLOW154tzfIWubZOIeBTQ1UpMrzc88H6aVi00WwwB8oMM');
 
 const PDFDocument = require('pdfkit');
 
@@ -157,7 +157,7 @@ exports.getCheckout = (req, res, next) => {
         payment_method_types: ['card'],
         line_items: lawns.map(l => {
           return {
-            name: l.lawnId.title,
+            name: l.lawnId.town,
             description: l.lawnId.description,
             amount: l.lawnId.price * 100,
             currency: 'usd',
