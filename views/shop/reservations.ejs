@@ -11,10 +11,10 @@
                 <ul class="orders">
                     <% reservations.forEach(reservation => { %>
                         <li class="orders__item">
-                            <h1>Reservation - # <%= order._id %> - <a href="/reservations/<%= reservation._id %>">Invoice</a></h1>
+                            <h1>Reservation - # <%= reservation._id %> - <a href="/reservations/<%= reservation._id %>">Invoice</a></h1>
                             <ul class="orders__products">
                                 <% reservation.lawns.forEach(l => { %>
-                                    <li class="orders__products-item"><%= l.lawn.title %> (<%= l.quantity %>)</li>
+                                    <li class="orders__products-item"><%= l.lawn.town %> (<%= l.quantity %>)</li>
                                 <% }); %>
                             </ul>
                         </li>
