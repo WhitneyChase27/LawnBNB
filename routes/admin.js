@@ -16,6 +16,8 @@ router.get('/add-lawn', isAuth, adminController.getAddLawn);
 // /admin/lawns => GET
 router.get('/lawns', isAuth, adminController.getLawns);
 
+
+
 // /admin/add-lawn => POST
 router.post(
   '/add-lawn',

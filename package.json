@@ -16,15 +16,19 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "boostrap": "^2.0.0",
+    "bootstrap-calendar": "^0.2.4",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.4.1",
     "csurf": "^1.11.0",
+    "domino": "^2.1.6",
     "ejs": "^2.7.4",
     "express": "^4.17.1",
     "express-check": "0.0.1",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.17.1",
     "express-validator": "^5.3.1",
+    "jquery": "^3.5.1",
     "mongodb": "^3.1.6",
     "mongoose": "^5.10.13",
     "multer": "^1.4.2",
@@ -34,6 +38,7 @@
     "pdfkit": "^0.8.3",
     "pug": "^2.0.3",
     "sequelize": "^5.0.0-beta.11",
-    "stripe": "^7.15.0"
+    "stripe": "^7.15.0",
+    "window": "^4.2.7"
   }
 }

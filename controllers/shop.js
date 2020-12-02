@@ -129,7 +129,7 @@ exports.postCart = (req, res, next) => {
 exports.postCartDeleteLawn = (req, res, next) => {
   const lawId = req.body.lawnId;
   req.user
-    .removeFromCart(lawcId)
+    .removeFromCart(lawId)
     .then(result => {
       res.redirect('/cart');
     })
