@@ -13,8 +13,37 @@
                         name="image" 
                         id="image" >
                 </div>
+
+                <h1>
+                    My Profile
+                </h1>
+
+                <div>
+                    <h2>Address: </h2>
+                    <h3><%= user.address%></h3>
+                </div>
+                <form action="/admin/EditProfileAddress" method="POST">
+                    <input type="text" name="address">
+                    <button class="btn" type="submit">Update Address</button>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                </form>
+
+                <br/>
+                <h2>Change Password: </h2>
+                <form action="/admin/EditProfilePassword" method="POST">
+                    <input type="text" name="password">
+                    <button class="btn" type="submit">Change</button>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                </form>
+
+                <div>
+                    <%= user.email%> 
+                </div>
+
+                <h2>My Reservations: </h2>
+
                 <% if (reservations.length <= 0) { %>
-                    <h1>Nothing there!</h1>
+                    <h3>Nothing scheduled</h3>
                 <% } else { %>
                     <ul class="orders">
                         <% reservations.forEach(reservation => { %>
