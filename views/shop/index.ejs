@@ -5,11 +5,26 @@
 <body>
     <%- include('../includes/navigation.ejs') %>
 
+    <div class="mid-background">
+        <!-- USE THIS FORM FOR THE FILTERS-->
+        <form action="" method="POST">
+            <div class="form-line-1">
+            <input style="width: 33%;" type="text" placeholder="Town"/>
+            <input style="width: 33%;" type="text" placeholder="State"/>
+            <input style="width: 33%;" type="text" placeholder="Lawn Size"/>
+            </div>
+            <div class="form-line-2">
+            <input style="width: 50%;" type="text" placeholder="Amenities"/>
+            <input style="width: 50%;" type="text" placeholder="Events"/>
+            </div>
+            <input style="width: 20%;" type="submit" value="Search"/>
+        </form>
+    </div>
     <main>
         <% if (laws.length > 0) { %>
             <div class="grid">
                 <% for (let lawn of laws) { %>
-                    <article class="card product-item">
+                    <div class="card product-item">
                         <header class="card__header">
                             <h1 class="product__title"><%= lawn.title %></h1>
                         </header>
@@ -27,7 +42,7 @@
                                 <%- include('../includes/add-to-cart.ejs', {lawn: lawn}) %>
                             <% } %>
                         </div>
-                    </article>
+                    </div>
                 <% } %>
             </div>
             <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, previousPage: previousPage, lastPage: lastPage, hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage}) %>
