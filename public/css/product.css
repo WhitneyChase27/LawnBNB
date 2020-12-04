@@ -96,4 +96,5 @@
 .product__description,
 .product__actions {
     padding-left: 1rem;
+    margin-top: 1rem;
 }
