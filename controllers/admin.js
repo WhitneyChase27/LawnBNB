@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const fileHelper = require('../util/file');
 
+const bcrypt = require('bcryptjs');
+
 const { validationResult } = require('express-validator/check');
 
 const Lawn = require('../models/lawn');
@@ -225,9 +227,41 @@ exports.getUserProfile = (req, res, next) => {
         prods: lawns,
         pageTitle: 'User Profile',
         path: '/userProfile',
-        reservations: reservations
+        reservations: reservations,
+        user: req.user
       });
     });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+exports.postEditProfileAddress = (req, res, next) => {
+  const newAddress = req.body.address;
+  req.user.address = newAddress;
+  req.user.save().then(user =>{
+    res.redirect('/admin/userProfile')
+  })
+  .catch(err => {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });
+};
+
+exports.postEditProfilePassword = (req, res, next) => {
+  const newPassword = req.body.password;
+  bcrypt
+    .hash(newPassword, 12)
+    .then(hashedPassword => {
+      req.user.password = hashedPassword;
+      return req.user.save()
+    })
+    .then(user =>{
+      res.redirect('/admin/userProfile')
     })
     .catch(err => {
       const error = new Error(err);
