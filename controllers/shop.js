@@ -7,7 +7,7 @@ const PDFDocument = require('pdfkit');
 const Lawn = require('../models/lawn');
 const Reservation = require('../models/reservation');
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 6;
 
 exports.getLawns = (req, res, next) => {
   const page = +req.query.page || 1;

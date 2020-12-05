@@ -6,35 +6,37 @@
         <%- include('../includes/navigation.ejs') %>
 
             <main>
+                <div class="filler"></div>
                 <% if (laws.length > 0) { %>
                     <div class="grid">
                         <% for (let lawn of laws) { %>
                             <article class="card product-item">
-                                <header class="card__header">
-                                    <h1 class="product__title">
-                                        <%= lawn.title %>
-                                    </h1>
-                                </header>
-                                <div class="card__image">
-                                    <img src="/<%= lawn.imageUrl %>" alt="<%= lawn.title %>">
-                                </div>
-                                <div class="card__content">
-                                    <h2 class="product__price">$
-                                        <%= lawn.price %>
-                                    </h2>
+                                <div class = "card__content">
+                                    <header class="card__header">
+                                        <h1 class="product__title">
+                                            <%= lawn.town %>
+                                        </h1>
+                                        <span class="product__price">$
+                                            <%= lawn.price %>
+                                        </span>
+                                        <hr />
+                                    </header>
                                     <p class="product__description">
                                         <%= lawn.description %>
                                     </p>
+                                    <div class="product__actions">
+                                        <a href="/admin/edit-lawn/<%= lawn._id %>?edit=true" class="btn">Edit</a>
+                                        <input type="hidden" value="<%= lawn._id %>" name="lawnId">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn" type="button" onclick="deleteLawn(this)">Delete</button>
+                                        <a href="/lawns/<%= lawn._id %>" class="btn">Details</a>
+                                        <% if (isAuthenticated) { %>
+                                            <%- include('./lawn-management.ejs', {lawn: lawn}) %>
+                                        <% } %>
+                                    </div>
                                 </div>
-                                <div class="card__actions">
-                                    <a href="/admin/edit-lawn/<%= lawn._id %>?edit=true" class="btn">Edit</a>
-                                    <input type="hidden" value="<%= lawn._id %>" name="lawnId">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <button class="btn" type="button" onclick="deleteLawn(this)">Delete</button>
-                                    <a href="/lawns/<%= lawn._id %>" class="btn">Details</a>
-                                    <% if (isAuthenticated) { %>
-                                        <%- include('./lawn-management.ejs', {lawn: lawn}) %>
-                                    <% } %>
+                                <div class="card__image">
+                                    <img src="/<%= lawn.imageUrl %>" alt="<%= lawn.title %>">
                                 </div>
                             </article>
                             <% } %>
