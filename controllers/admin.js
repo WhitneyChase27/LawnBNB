@@ -239,6 +239,19 @@ exports.getUserProfile = (req, res, next) => {
     });
 };
 
+exports.postEditProfilePicture = (req, res, next) => {
+  const newPicture = req.body.picture;
+  req.user.picture = newPicture;
+  req.user.save().then(user =>{
+    res.redirect('/admin/userProfile')
+  })
+  .catch(err => {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });
+};
+
 exports.postEditProfileAddress = (req, res, next) => {
   const newAddress = req.body.address;
   req.user.address = newAddress;

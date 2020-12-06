@@ -1,22 +1,35 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/lawn.css">
+    <style>
+        .profilePicture {
+            width: 100px;
+            border: 2px solid green;
+        }
+    </style>
     </head>
 
     <body>
         <%- include('../includes/navigation.ejs') %>
         
             <main>
-                <div class="form-control">
-                    <label for="image">Image</label>
-                    <input 
-                        type="file" 
-                        name="image" 
-                        id="image" >
-                </div>
+                
 
                 <h1>
                     My Profile
                 </h1>
+
+                <img class="profilePicture" src=<%= user.picture%>>
+                <br/>
+
+                <form method="POST" action="/admin/EditProfilePicture">
+                    <label for="picture"><br/>Edit Profile Picture (Enter Image URL) <br/></label>
+                    <input 
+                        type="text" 
+                        name="picture" 
+                        id="picture" >
+                        <button class="btn" type="submit">Change Pic</button>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                </form>
 
                 <div>
                     <h2>Address: </h2>
@@ -48,7 +61,7 @@
                     <ul class="orders">
                         <% reservations.forEach(reservation => { %>
                             <li class="orders__item">
-                                <h1>Reservation - # <%= reservation._id %> - <a href="/reservations/<%= reservation._id %>">Invoice</a></h1>
+                                <h3>Reservation - # <%= reservation._id %> - <a href="/reservations/<%= reservation._id %>">Invoice</a></h3>
                                 <ul class="orders__products">
                                     <% reservation.lawns.forEach(l => { %>
                                         <li class="orders__products-item"><%= l.lawn.town %> (<%= l.quantity %>)</li>

@@ -21,6 +21,12 @@ router.get('/userProfile', isAuth, adminController.getUserProfile);
 
 // /admin/userProfile => POST
 router.post(
+  '/EditProfilePicture',
+  isAuth,
+  adminController.postEditProfilePicture
+);
+
+router.post(
   '/EditProfileAddress',
   isAuth,
   adminController.postEditProfileAddress
