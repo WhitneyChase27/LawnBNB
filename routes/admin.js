@@ -19,6 +19,25 @@ router.get('/lawns', isAuth, adminController.getLawns);
 // /admin/userProfile => GET
 router.get('/userProfile', isAuth, adminController.getUserProfile);
 
+// /admin/userProfile => POST
+router.post(
+  '/EditProfilePicture',
+  isAuth,
+  adminController.postEditProfilePicture
+);
+
+router.post(
+  '/EditProfileAddress',
+  isAuth,
+  adminController.postEditProfileAddress
+);
+
+router.post(
+  '/EditProfilePassword',
+  isAuth,
+  adminController.postEditProfilePassword
+);
+
 // /admin/add-product => POST
 router.post(
   '/add-lawn',

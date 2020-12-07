@@ -4,10 +4,12 @@
     <nav class="main-header__nav">
         <ul class="main-header__item-list">
             <li class="main-header__item">
-                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">
+                    <img style="vertical-align: middle;" src="/ico.svg" alt="lawnBnBIco"/>
+                </a>
             </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/lawns' ? 'active' : '' %>" href="/lawns">Lawns</a>
+            <li class="main-header__title">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Lawn BnB</a>
             </li>
             <% if (isAuthenticated) { %>
                 <li class="main-header__item">
@@ -15,6 +17,10 @@
                 </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/reservations' ? 'active' : '' %>" href="/reservations">Reservations</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/userProfile' ? 'active' : '' %>" href="/admin/userProfile">Profile
+                    </a>
                 </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/admin/add-lawn' ? 'active' : '' %>" href="/admin/add-lawn">Add Lawn
