@@ -94,7 +94,7 @@ exports.postAddLawn = (req, res, next) => {
     .then(result => {
       // console.log(result);
       console.log('Created Lawn');
-      res.redirect('/admin/lawn');
+      res.redirect('/admin/lawns');
     })
     .catch(err => {
       // return res.status(500).render('admin/edit-product', {
