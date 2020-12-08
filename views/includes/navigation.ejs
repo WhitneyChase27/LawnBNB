@@ -19,10 +19,6 @@
                     <a class="<%= path === '/reservations' ? 'active' : '' %>" href="/reservations">Reservations</a>
                 </li>
                 <li class="main-header__item">
-                    <a class="<%= path === '/admin/userProfile' ? 'active' : '' %>" href="/admin/userProfile">Profile
-                    </a>
-                </li>
-                <li class="main-header__item">
                     <a class="<%= path === '/admin/add-lawn' ? 'active' : '' %>" href="/admin/add-lawn">Add Lawn
                     </a>
                 </li>
@@ -41,6 +37,10 @@
                     <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
                 </li>
             <% } else { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/userProfile' ? 'active' : '' %>" href="/admin/userProfile">Profile
+                    </a>
+                </li>
                 <li class="main-header__item">
                     <form action="/logout" method="post">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">

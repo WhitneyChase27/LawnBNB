@@ -1,4 +1,4 @@
-<%- include('../includes/head.ejs') %>
+<%- include('../includes/head-bright.ejs') %>
     <link rel="stylesheet" href="/css/lawn.css">
     </head>
 
@@ -6,41 +6,48 @@
         <%- include('../includes/navigation.ejs') %>
         
             <main>
-                <div class="form-control">
-                    <label for="image">Image</label>
-                    <input 
-                        type="file" 
-                        name="image" 
-                        id="image" >
+                <div class = "sidebar">
+                    <div class="form-control">
+                        <label for="image">Image</label>
+                        <input 
+                            type="file" 
+                            name="image" 
+                            id="image" >
+                    </div>
+
+                    <h1>
+                        My Profile
+                    </h1>
+
+                    <div>
+                        <h2>Address: </h2>
+                        <h3><%= user.address%></h3>
+                    </div>
+                    <form action="/admin/EditProfileAddress" method="POST">
+                        <input type="text" name="address">
+                        <button class="btn" type="submit">Update Address</button>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    </form>
+
+                    <br/>
+                    <h2>Change Password: </h2>
+                    <form action="/admin/EditProfilePassword" method="POST">
+                        <input type="text" name="password">
+                        <button class="btn" type="submit">Change</button>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    </form>
+
+                    <div>
+                        <%= user.email%> 
+                    </div>
                 </div>
-
-                <h1>
-                    My Profile
-                </h1>
-
-                <div>
-                    <h2>Address: </h2>
-                    <h3><%= user.address%></h3>
-                </div>
-                <form action="/admin/EditProfileAddress" method="POST">
-                    <input type="text" name="address">
-                    <button class="btn" type="submit">Update Address</button>
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                </form>
-
-                <br/>
-                <h2>Change Password: </h2>
-                <form action="/admin/EditProfilePassword" method="POST">
-                    <input type="text" name="password">
-                    <button class="btn" type="submit">Change</button>
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                </form>
-
-                <div>
-                    <%= user.email%> 
-                </div>
-
-                <h2>My Reservations: </h2>
+                <div class = "content">
+                    <div class="myItem">
+                        <div class="myItem__header">
+                            My Reservations
+                        </div>
+                    
+                    <div class="myItem__content">
 
                 <% if (reservations.length <= 0) { %>
                     <h3>Nothing scheduled</h3>
@@ -58,6 +65,9 @@
                         <% }); %>
                     </ul>
                 <% } %>
+                </div>
+                    </div>
+                </div>
             </main>
             <%- include('../includes/end.ejs') %>
             <script src="/js/admin.js"></script>
