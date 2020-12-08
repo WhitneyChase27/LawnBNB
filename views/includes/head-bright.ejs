@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= pageTitle %></title>
+
+    <link rel="shortcut icon" href="/ico-dark.svg">
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+header {
+    display:block;
+}
+
+.main-header {
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  padding: 0 0.5rem;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  border-bottom-style: solid;
+  border-color: #5DC55B;
+}
+
+.main-header__nav {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-header__item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  display: flex;
+}
+
+.main-header__item {
+  margin: 0 0.5rem;
+  padding: 0;
+  align-items:center;
+}
+
+.main-header__title {
+  margin: 0 0.5rem;
+  padding: 0;
+  align-items:center;
+  font-family: "Ramaraja";
+  font-weight: 550;
+  font-size: 28px;
+}
+
+.main-header__item a,
+.main-header__item a:active,
+.main-header__item a.active,
+.main-header__title a,
+.main-header__title a:active,
+.main-header__title a.active,
+.main-header__item button,
+.main-header__item button:active  {
+  font: inherit;
+  background: transparent;
+  border: none;
+  text-decoration: none;
+  color: #5DC55B;
+  cursor: pointer;
+}
+
+.main-header__title a:hover,
+.main-header__item a:hover,
+.main-header__item button:hover{
+  color: #ffeb3b;
+}
+    </style>
