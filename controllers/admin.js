@@ -29,6 +29,8 @@ exports.postAddLawn = (req, res, next) => {
   const groupsize = req.body.groupsize;
   const eventhrs = req.body.eventhrs;
   const description = req.body.description;
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
   const image = req.file;
   if (!image) {
     return res.status(422).render('admin/edit-lawn', {
@@ -45,6 +47,11 @@ exports.postAddLawn = (req, res, next) => {
         groupsize: groupsize,
         eventhrs: eventhrs,
         description: description
+        // Bucket: S3_BUCKET,
+        // Key: fileName,
+        // Expires: 60,
+        // ContentType: fileType,
+        // ACL: 'public-read'
       },
       errorMessage: 'Attached file is not an image.',
       validationErrors: []
@@ -68,6 +75,11 @@ exports.postAddLawn = (req, res, next) => {
         groupsize: groupsize,
         eventhrs: eventhrs,
         description: description
+        // Bucket: S3_BUCKET,
+        // Key: fileName,
+        // Expires: 60,
+        // ContentType: fileType,
+        // ACL: 'public-read'
       },
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array()
@@ -118,6 +130,20 @@ exports.postAddLawn = (req, res, next) => {
     });
 };
 
+// exports.getSignedUrl('putObject', s3Params, (err, data) => {
+//   if(err){
+//     console.log(err);
+//     return res.end();
+//   }
+//   const returnData = {
+//     signedRequest: data,
+//     url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+//   };
+//   res.write(JSON.stringify(returnData));
+//   res.end();
+// });
+
+
 exports.getEditLawn = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) {
@@ -154,22 +180,52 @@ exports.getLawnManagement = (req, res, next) => {
  
   // !function() {
 
-  //   var today = moment();
+  //   const Window = require('window');
+ 
+  //   const window = new Window();
+
+  //   var today = new Date();
+
+  //   var data = [
+  //     { eventName: 'Lunch Meeting w/ Mark', calendar: 'Work', color: 'orange' },
+  //     { eventName: 'Interview - Jr. Web Developer', calendar: 'Work', color: 'orange' },
+  //     { eventName: 'Demo New App to the Board', calendar: 'Work', color: 'orange' },
+  //     { eventName: 'Dinner w/ Marketing', calendar: 'Work', color: 'orange' },
   
-  //   function Calendar(selector, events) {
-  //     this.el = document.querySelector(selector);
-  //     this.events = events;
-  //     this.current = moment().date(1);
-  //     this.draw();
-  //     var current = document.querySelector('.today');
-  //     if(current) {
-  //       var self = this;
-  //       window.setTimeout(function() {
-  //         self.openDay(current);
-  //       }, 500);
+  //     { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
+  //     { eventName: 'Game vs Houston', calendar: 'Sports', color: 'blue' },
+  //     { eventName: 'Game vs Denver', calendar: 'Sports', color: 'blue' },
+  //     { eventName: 'Game vs San Degio', calendar: 'Sports', color: 'blue' },
+  
+  //     { eventName: 'School Play', calendar: 'Kids', color: 'yellow' },
+  //     { eventName: 'Parent/Teacher Conference', calendar: 'Kids', color: 'yellow' },
+  //     { eventName: 'Pick up from Soccer Practice', calendar: 'Kids', color: 'yellow' },
+  //     { eventName: 'Ice Cream Night', calendar: 'Kids', color: 'yellow' },
+  
+  //     { eventName: 'Free Tamale Night', calendar: 'Other', color: 'green' },
+  //     { eventName: 'Bowling Team', calendar: 'Other', color: 'green' },
+  //     { eventName: 'Teach Kids to Code', calendar: 'Other', color: 'green' },
+  //     { eventName: 'Startup Weekend', calendar: 'Other', color: 'green' }
+  //   ];
+  
+  //   class Calendar{
+  //     Calendar(selector, events) {
+  //       this.el = document.querySelector(selector);
+  //       this.events = events;
+  //       this.current = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();;
+  //       this.draw();
+  //       var current = document.querySelector('.today');
+  //       if(current) {
+  //         var self = this;
+  //          window.setTimeout(function() {
+  //           self.openDay(current);
+  //         }, 500);
+  //       }
   //     }
   //   }
-  
+
+    
+    
   //   Calendar.prototype.draw = function() {
   //     //Create Header
   //     this.drawHeader();
@@ -223,7 +279,7 @@ exports.getLawnManagement = (req, res, next) => {
   //         self.currentMonth();
   //         self.fowardFill();
   //         self.el.appendChild(self.month);
-  //         window.setTimeout(function() {
+  //          window.setTimeout(function() {
   //           self.month.className = 'month in ' + (self.next ? 'next' : 'prev');
   //         }, 16);
   //       });
@@ -459,6 +515,9 @@ exports.getLawnManagement = (req, res, next) => {
   //     this.draw();
   //   }
   
+  //   const calendar = new Calendar('#calendar', data);
+  //   console.log("CALENDAR: " + calendar.eventName);
+    
   //   window.Calendar = Calendar;
   
   //   function createElement(tagName, className, innerText) {
@@ -472,51 +531,31 @@ exports.getLawnManagement = (req, res, next) => {
   //     return ele;
   //   }
   // }();
+
+  
   
   // !function() {
-  //   var data = [
-  //     { eventName: 'Lunch Meeting w/ Mark', calendar: 'Work', color: 'orange' },
-  //     { eventName: 'Interview - Jr. Web Developer', calendar: 'Work', color: 'orange' },
-  //     { eventName: 'Demo New App to the Board', calendar: 'Work', color: 'orange' },
-  //     { eventName: 'Dinner w/ Marketing', calendar: 'Work', color: 'orange' },
-  
-  //     { eventName: 'Game vs Portalnd', calendar: 'Sports', color: 'blue' },
-  //     { eventName: 'Game vs Houston', calendar: 'Sports', color: 'blue' },
-  //     { eventName: 'Game vs Denver', calendar: 'Sports', color: 'blue' },
-  //     { eventName: 'Game vs San Degio', calendar: 'Sports', color: 'blue' },
-  
-  //     { eventName: 'School Play', calendar: 'Kids', color: 'yellow' },
-  //     { eventName: 'Parent/Teacher Conference', calendar: 'Kids', color: 'yellow' },
-  //     { eventName: 'Pick up from Soccer Practice', calendar: 'Kids', color: 'yellow' },
-  //     { eventName: 'Ice Cream Night', calendar: 'Kids', color: 'yellow' },
-  
-  //     { eventName: 'Free Tamale Night', calendar: 'Other', color: 'green' },
-  //     { eventName: 'Bowling Team', calendar: 'Other', color: 'green' },
-  //     { eventName: 'Teach Kids to Code', calendar: 'Other', color: 'green' },
-  //     { eventName: 'Startup Weekend', calendar: 'Other', color: 'green' }
-  //   ];
-  
-    
-  
+
   //   function addDate(ev) {
       
   //   }
   
-  //   var calendar = new Calendar('#calendar', data);
-  
   // }();
+
+  
+
   
   const lawId = req.params.lawnId;                  
-  Lawn.findById(lawId)
+  Lawn.find({ userId: req.user._id })
     .then(lawn => {
-      if (!lawn) {
-        return res.redirect('/');
-      }
+      // if (!lawn) {
+      //   return res.redirect('/');
+      // }
       res.render('admin/lawn-management', {
         pageTitle: 'Lawn Management',
         path: '/admin/lawn-management',
         editing: editMode,
-        lawn: lawn,
+        laws: lawn,
         hasError: false,
         errorMessage: null,
         validationErrors: []
@@ -599,6 +638,7 @@ exports.getLawns = (req, res, next) => {
 };
 
 exports.getUserProfile = (req, res, next) => {
+  
   Lawn.find({ userId: req.user._id })
     // .select('title price -_id')
     // .populate('userId', 'name')
