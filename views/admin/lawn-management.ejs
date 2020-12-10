@@ -1,8 +1,125 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/fullcalendar.css" >
+    <link rel="stylesheet" href="/css/fullcalendar.print.css" >
+    <script src="/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui.custom.min.js" type="text/javascript"></script>
+    <script src="/js/fullcalendar.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/css/product.css">
-    </head>
+    
 
     <body>
+ 
+    <style>
+    
+        body {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
+            background-color: #DDDDDD;
+            }
+    
+        #wrap {
+            width: 1100px;
+            margin: 0 auto;
+            }
+    
+        #external-events {
+            float: left;
+            width: 150px;
+            padding: 0 10px;
+            text-align: left;
+            }
+    
+        #external-events h4 {
+            font-size: 16px;
+            margin-top: 0;
+            padding-top: 1em;
+            }
+    
+        .external-event { /* try to mimick the look of a real event */
+            margin: 10px 0;
+            padding: 2px 4px;
+            background: #3366CC;
+            color: #fff;
+            font-size: .85em;
+            cursor: pointer;
+            }
+    
+        #external-events p {
+            margin: 1.5em 0;
+            font-size: 11px;
+            color: #666;
+            }
+    
+        #external-events p input {
+            margin: 0;
+            vertical-align: middle;
+            }
+    
+        #calendar {
+    /* 		float: right; */
+            margin: 0 auto;
+            width: 900px;
+            background-color: #FFFFFF;
+              border-radius: 6px;
+            box-shadow: 0 1px 2px #C3C3C3;
+            }
+    
+    </style>
+   <body>
+    <%- include('../includes/navigation.ejs') %>
 
-           
-            <%- include('../includes/end.ejs') %>
-            <script src="/js/admin.js"></script>
+        <main>
+            <div class="filler"></div>
+            <% if (laws.length > 0) { %>
+                <div class="grid">
+                    <% for (let lawn of laws) { %>
+                        <article class="card product-item">
+                            <div class = "card__content">
+                                <header class="card__header">
+                                    <h1 class="product__title">
+                                        <%= lawn.town %>
+                                    </h1>
+                                    <span class="product__price">$
+                                        <%= lawn.price %>
+                                    </span>
+                                    <hr />
+                                </header>
+                                <div class="image">
+                                    <img src="/<%= lawn.imageUrl %>" alt="<%= lawn.title %>">
+                                </div>
+                                <p class="product__description">
+                                    <%= lawn.description %>
+                                </p>
+                                <div id='wrap'>
+
+                                    <div id='calendar'></div>
+                                    
+                                    <div style='clear:both'></div>
+                                </div>   
+                            </div>
+                       
+                        </article>
+                        <% } %>
+                </div>
+                <% } else { %>
+                    <h1>No Lawns Found!</h1>
+                    <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>
+        <script src="/js/admin.js"></script>
+
+        
+     
+
+  
+    
+   
+    
+        
+        
+   
+
+        
+       
