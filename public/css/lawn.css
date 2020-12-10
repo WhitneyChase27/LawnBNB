@@ -27,6 +27,7 @@ main {
     height: 100%;
     vertical-align: top;
     display:inline-block;
+    padding-bottom: 50px;
 }
 
 .myItem {
@@ -62,8 +63,32 @@ main {
 
 .myItem__content ul{
     list-style-type: none;
-    background-color: white;
-    width: 90%;
+    width: 98%;
     border-radius: 3px;
     margin: auto;
+}
+
+.myItem__content li{
+    width: 100%;
+    background-color: white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.myItem__content li a{
+    text-decoration: none;
+}
+
+.addButton {
+    display: flex;
+    width:100%;
+    justify-content: flex-start;
+    align-items: center;
+    border-style: none;
+    
+}
+
+.addButton img {
+    margin-right: 40px;
 }

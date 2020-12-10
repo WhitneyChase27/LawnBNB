@@ -227,6 +227,7 @@ exports.getUserProfile = (req, res, next) => {
         prods: lawns,
         pageTitle: 'User Profile',
         path: '/userProfile',
+        laws: lawns,
         reservations: reservations,
         user: req.user
       });
