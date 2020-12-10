@@ -90,45 +90,6 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
-exports.postSearch = (req, res, next) => {
-  const page = +req.query.page || 1;
-  let totalItems;
-  const town = req.body.townInput;
-  const state = req.body.stateInput;
-  const size = req.body.sizeInput;
-  const amenity = req.body.amenityInput;
-  const event = req.body.eventInput;
-  const searchInput = [{town: town}, {state: state}, {lawnsize: size}, {amenities: amenity}, {events: event}]
-  Lawn.find()
-  .or(searchInput)
-  .countDocuments()
-  .then(numLawns => {
-    totalItems = numLawns;
-    return Lawn.find()
-    .or(searchInput)
-      .skip((page - 1) * ITEMS_PER_PAGE)
-      .limit(ITEMS_PER_PAGE);
-  })
-    .then(lawns => {
-      res.render('shop/index', {
-        laws: lawns,
-        pageTitle: 'Shop',
-        path: '/',
-        currentPage: page,
-        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-        hasPreviousPage: page > 1,
-        nextPage: page + 1,
-        previousPage: page - 1,
-        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
-      });
-    })
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
-};
-
 exports.getCart = (req, res, next) => {
   req.user
     .populate('cart.items.lawnId')

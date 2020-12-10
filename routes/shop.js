@@ -9,8 +9,6 @@ const router = express.Router();
 
 router.get('/', shopController.getIndex);
 
-router.post('/search', shopController.postSearch);
-
 router.get('/lawns', shopController.getLawns);
 
 router.get('/lawns/:lawnId', shopController.getLawn);
