@@ -6,17 +6,18 @@
     <%- include('../includes/navigation.ejs') %>
     <div class="mid-background">
         <!-- USE THIS FORM FOR THE FILTERS-->
-        <form action="" method="POST">
+        <form action="/search" method="POST">
             <div class="form-line-1">
-            <input style="width: 33%;" type="text" placeholder="Town"/>
-            <input style="width: 33%;" type="text" placeholder="State"/>
-            <input style="width: 33%;" type="text" placeholder="Lawn Size"/>
+            <input style="width: 33%;" type="text" name="townInput" placeholder="Town"/>
+            <input style="width: 33%;" type="text" name="stateInput" placeholder="State"/>
+            <input style="width: 33%;" type="text" name="sizeInput" placeholder="Lawn Size"/>
             </div>
             <div class="form-line-2">
-            <input style="width: 50%;" type="text" placeholder="Amenities"/>
-            <input style="width: 50%;" type="text" placeholder="Events"/>
+            <input style="width: 50%;" type="text" name="amenityInput" placeholder="Amenities"/>
+            <input style="width: 50%;" type="text" name="eventInput" placeholder="Events"/>
             </div>
             <input style="width: 20%;" type="submit" value="Search"/>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         </form>
     </div>
     <main>
